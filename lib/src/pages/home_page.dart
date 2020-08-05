@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:assorted_layout_widgets/assorted_layout_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -157,7 +159,26 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
-              _buildListExpenses(size),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: ListBody(
+                  children: [
+                    _buildListExpenses(size, false, 'Medicine', '~\$2,300'),
+                    Container(
+                      margin: EdgeInsets.symmetric(
+                        vertical: 10.0,
+                      ),
+                      height: size.height * 0.025,
+                      child: Divider(
+                        color: Color.fromRGBO(240, 241, 250, 1.0),
+                        height: 1,
+                        thickness: 0.7,
+                      ),
+                    ),
+                    _buildListExpenses(size, true, 'Social', '~\$1,500'),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
@@ -165,26 +186,81 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildListExpenses(Size size) {
-    return CustomPaint(
-      painter: RadialPainter(
-          progress: 0.7,
+  Widget _buildListExpenses(
+      Size size, bool isInverted, String title, String cost) {
+    Widget containerRotation;
+    if (isInverted) {
+      containerRotation = RotatedBox(
+        quarterTurns: 2,
+        child: Transform(
+          transform: Matrix4.rotationX(pi),
+          alignment: Alignment.center,
+          child: CustomPaint(
+            painter: RadialPainter(
+              progressRemoval: 0.7,
+              color: Colors.green,
+              paintingStyle: PaintingStyle.stroke,
+              strokeCap: StrokeCap.round,
+              strokeWidth: 2.0,
+            ),
+            child: Container(
+              height: 60,
+              width: 60,
+              child: Center(
+                child: Icon(FontAwesomeIcons.solidHandshake),
+              ),
+            ),
+          ),
+        ),
+      );
+    } else {
+      containerRotation = CustomPaint(
+        painter: RadialPainter(
+          progressRemoval: 0.7,
           color: Colors.blue,
           paintingStyle: PaintingStyle.stroke,
-          strokeCap: StrokeCap.round),
-      child: Container(
-        height: 100,
-        width: 100,
-        child: Center(
-          child: Icon(Icons.ac_unit),
+          strokeCap: StrokeCap.round,
+          strokeWidth: 2.0,
         ),
-      ),
+        child: Container(
+          height: 60,
+          width: 60,
+          child: Center(
+            child: Icon(Icons.ac_unit),
+          ),
+        ),
+      );
+    }
+
+    return Row(
+      children: [
+        Column(
+          children: [
+            containerRotation,
+          ],
+        ),
+        SizedBox(
+          width: 25.0,
+        ),
+        Text(
+          title,
+          style: TextStyle(
+            color: Color.fromRGBO(57, 74, 109, 1.0),
+            fontWeight: FontWeight.w700,
+            fontStyle: FontStyle.normal,
+          ),
+        ),
+        Spacer(),
+        Text(
+          cost,
+          style: TextStyle(
+            color: Color.fromRGBO(57, 74, 109, 1.0),
+            fontWeight: FontWeight.w700,
+            fontStyle: FontStyle.normal,
+          ),
+        ),
+      ],
     );
-    /*return ListView.separated(
-        itemBuilder: null,
-        separatorBuilder: (BuildContext context, int index) =>
-            Divider(height: 1),
-        itemCount: null);*/
   }
 
   Widget _contacts(Size size) {
