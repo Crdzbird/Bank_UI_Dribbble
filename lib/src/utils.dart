@@ -16,3 +16,9 @@ const List<Color> avatarColors = [
   Color.fromRGBO(255, 191, 58, 1.0),
   Color.fromRGBO(216, 108, 108, 1.0),
 ];
+
+const List<String> dates = [
+  'Days',
+  'Week',
+  'Months',
+];

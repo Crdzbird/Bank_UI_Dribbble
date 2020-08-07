@@ -23,7 +23,7 @@ class HomePage extends StatelessWidget {
             children: [
               _header(size),
               _balance(size),
-              _bottomShape(size),
+              _bottomShape(size, context),
             ],
           ),
         ],
@@ -31,7 +31,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _bottomShape(Size size) {
+  Widget _bottomShape(Size size, BuildContext context) {
     return Expanded(
       child: Container(
         width: size.width,
@@ -92,14 +92,14 @@ class HomePage extends StatelessWidget {
             SizedBox(
               height: 25.0,
             ),
-            _totalTransfer(size),
+            _totalTransfer(size, context),
           ],
         ),
       ),
     );
   }
 
-  Widget _totalTransfer(Size size) {
+  Widget _totalTransfer(Size size, BuildContext context) {
     return Expanded(
       child: Container(
         width: size.width,
@@ -146,16 +146,19 @@ class HomePage extends StatelessWidget {
                     ),
                   ],
                 ),
-                trailing: Container(
-                  height: 45.0,
-                  width: 45.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(17.0),
-                    color: Color.fromRGBO(240, 241, 250, 1.0),
-                  ),
-                  child: Icon(
-                    FontAwesomeIcons.calculator,
-                    color: Color.fromRGBO(106, 93, 208, 1.0),
+                trailing: GestureDetector(
+                  onTap: () => Navigator.pushNamed(context, 'dashboard'),
+                  child: Container(
+                    height: 45.0,
+                    width: 45.0,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(17.0),
+                      color: Color.fromRGBO(240, 241, 250, 1.0),
+                    ),
+                    child: Icon(
+                      FontAwesomeIcons.calculator,
+                      color: Color.fromRGBO(106, 93, 208, 1.0),
+                    ),
                   ),
                 ),
               ),
